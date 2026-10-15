@@ -89,7 +89,7 @@ they are tested analytically (`tests/test_modes.py`).
 
 ## AI assistance
 
-Parts of the code, tests and documentation were developed with the assistance of an AI model (Claude, Anthropic).
+Parts of the code, tests and documentation were developed with the assistance of an AI model.
 The authors reviewed the code, verified it against the engine outputs above, and are responsible for it.
 
 ## Citation and license
