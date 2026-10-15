@@ -38,7 +38,8 @@ def scott_reinhardt(fuel, m1, m10, m100, mlh, mlw, fmc, wind20_kmh, slope_pct, c
     waf = base["waf"]; M = [pct(x) for x in (m1, m10, m100, mlh, mlw)]; tanS = pct(slope_pct)
     surf = rothermel(fm, *M, waf * U20, tanS, options=o)
     rs, hpa_s = surf["ros"], surf["hpa"]                                  # ft/min, Btu/ft2
-    r_active = 3.34 * rothermel(fm10, *M, 0.4 * U20, 0.0, options=o)["ros"]   # ft/min
+    tan10 = tanS if o.crown_slope else 0.0                                     # D10
+    r_active = 3.34 * rothermel(fm10, *M, 0.4 * U20, tan10, options=o)["ros"]   # ft/min
 
     # Van Wagner critical intensity and Scott & Reinhardt R'initiation
     i0 = critical_intensity(cbh_m, fmc, limits=o.van_wagner_limits)         # kW/m
@@ -54,8 +55,9 @@ def scott_reinhardt(fuel, m1, m10, m100, mlh, mlw, fmc, wind20_kmh, slope_pct, c
     f10 = rothermel(fm10, *M, 0.0, 0.0, options=o)
     ros0 = f10["ir"] * f10["xi"] / f10["sink"]
     K = f10["wind_C"] * np.power(f10["rel_packing"], -f10["wind_E"])
-    a = (r10 / ros0 - 1.0) / K
-    o_mid = np.where(a > 0, np.power(np.maximum(a, 0.0), 1.0 / f10["wind_B"]), np.nan)
+    phi_s10 = rothermel(fm10, *M, 0.0, tan10, options=o)["phi_s"] if o.crown_slope else 0.0
+    a = (r10 / ros0 - 1.0 - phi_s10) / K                                       # Scott & Reinhardt (2001), Eq. 19
+    o_mid = np.where(a > 0, np.power(np.maximum(a, 0.0), 1.0 / f10["wind_B"]), 0.0)   # slope alone sufficient: O'active = 0
     o_active = o_mid / 0.4                                                  # ft/min, 20-ft wind
     r_sa = rothermel(fm, *M, waf * o_active, tanS, options=o)["ros"]        # ft/min
 

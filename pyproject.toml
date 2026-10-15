@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rothcruz"
-version = "0.1.0"
+version = "0.2.0"
 description = "Rothermel surface fire and crown fire spread models (Van Wagner, Rothermel 1991, Cruz et al. 2005, Scott and Reinhardt 2001) verified against the BehavePlus engine"
 readme = "README.md"
 requires-python = ">=3.10"

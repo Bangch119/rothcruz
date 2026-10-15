@@ -5,7 +5,7 @@ BehavePlus engine, which behaviour is used. Two presets cover the common cases:
     PUBLISHED      the original equations and tables (default)
     BEHAVE_COMPAT  reproduces the engine (firelab/behave commit d4acc8a)
 
-Each field corresponds to an entry of docs/divergences.md (D1-D9).
+Each field corresponds to an entry of docs/divergences.md (D1-D10).
 """
 from __future__ import annotations
 
@@ -23,6 +23,9 @@ class ModelOptions:
     fuel_table: str = "published"          # D9  "published": Albini (1976) live SAV of FM7 = 1550   "engine": 1500
     override_crown_ratio: bool = False     # D2  True: ignore a user crown ratio and use (CH - CBH)/CH, as the engine does
     van_wagner_limits: bool = False        # D5  True: FMC >= 30 %, CBH >= 0.1 m in the critical intensity, as the engine does
+    crown_slope: bool = True               # D10 True: slope factor of fuel model 10 in the crown fire spread rate and O'active
+                                           #     (Rothermel 1991, Table 1a; Scott & Reinhardt 2001, Eq. 8, 19); the engine uses zero slope.
+                                           #     Rothermel (1991, p. 25) recommends zero slope for the average rate of runs across uneven terrain.
     cap_slope_factor: bool = False         # D7  True: cap phi_s at 0.9 * reaction intensity (engine), matters above about 77 degrees
     engine_constants: bool = False         # D3, D4, D8  True: the engine's rounded unit constants and its classification order
 
@@ -41,7 +44,7 @@ class ModelOptions:
 
 PUBLISHED = ModelOptions()
 BEHAVE_COMPAT = ModelOptions(curing="behaveplus", wind_limit="none", fuel_table="engine", override_crown_ratio=True,
-                             van_wagner_limits=True, cap_slope_factor=True, engine_constants=True)
+                             van_wagner_limits=True, cap_slope_factor=True, engine_constants=True, crown_slope=False)
 
 
 def resolve(options) -> ModelOptions:

@@ -76,7 +76,7 @@ def crown_fire(fuel, m1, m10, m100, mlh, mlw, fmc, wind20_kmh, slope_pct,
     surf = rothermel(fm, pct(m1), pct(m10), pct(m100), pct(mlh), pct(mlw),
                      waf * U20, pct(slope_pct), options=o)
     fm10 = rothermel(fuel_model(10, o), pct(m1), pct(m10), pct(m100), pct(mlh), pct(mlw),
-                     0.4 * U20, 0.0, options=o)
+                     0.4 * U20, pct(slope_pct) if o.crown_slope else 0.0, options=o)     # D10
     crown_ros_ftmin = 3.34 * fm10["ros"]
 
     kw = BTU_FT_S_TO_KW_M_ENGINE if o.engine_constants else BTU_FT_S_TO_KW_M

@@ -5,7 +5,7 @@
 Rothermel surface fire spread model and crown fire models in Python, verified case by case against the
 official BehavePlus calculation engine ([firelab/behave](https://github.com/firelab/behave)).
 
-**Version 0.1.0.** The verification suite passes and the `published` / `behave_compat` modes work. Documentation is
+**Version 0.2.0.** The verification suite passes and the `published` / `behave_compat` modes work. Documentation is
 this README and `docs/divergences.md`.
 
 ## What it computes
@@ -69,6 +69,7 @@ out_limit  = crown_fire(165, 4, 5, 6, 30, 90, 100, 25.0, 20.0, 2.0, 0.15, 50, 15
 | `wind_limit` | `"none"` (both presets), `"midflame"`, `"effective"` | D6 |
 | `cap_slope_factor=True` | slope factor capped at 0.9 I_R (very steep slopes) | D7 |
 | `fuel_table="engine"` | live SAV of fuel model 7 is 1500, not Albini's 1550 | D9 |
+| `crown_slope=False` | crown fire spread rate without slope (also Rothermel's rule for runs across uneven terrain) | D10 |
 
 ## Verification against the engine
 

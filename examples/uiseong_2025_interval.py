@@ -40,7 +40,13 @@ SITE = dict(fuel=165, mlh=30, mlw=90, fmc=100, slope_pct=SLOPE, cbh_m=2.0, cbd_k
             canopy_cover_pct=50, canopy_height_m=15.0)   # TU5 and the base canopy of the evaluation
 
 
-def main(options=PUBLISHED, verbose=True):
+# The run crossed ridges and valleys, so the crown fire spread rate uses zero slope, following Rothermel (1991, p. 25):
+# "To estimate the average rate of spread wherein the fire may travel across uneven terrain, use zero slope."
+# The surface fire still uses the slope of the run. This is how the evaluation of Bang and Bang was run.
+OPTIONS = PUBLISHED.replace(crown_slope=False)
+
+
+def main(options=OPTIONS, verbose=True):
     wind_ms = np.array([h[2] for h in HOURS]); temp = np.array([h[3] for h in HOURS]); rh = np.array([h[4] for h in HOURS])
     m1, m10, m100 = dead_fuel_moisture(rh, temp)
     u20 = wind_ms * 3.6 / 1.15                      # 10-m wind (m/s) -> 20-ft wind (km/h)

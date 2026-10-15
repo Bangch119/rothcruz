@@ -13,6 +13,7 @@ Engine: firelab/behave commit `d4acc8a` (2026-09-14). Status = the field of `Mod
 | D7 | Slope factor cap | none | φ_s capped at 0.9 I_R (a wind speed) for very steep slopes, about 77° and above (`surfaceFire.cpp` 465–475) | none on normal slopes | `cap_slope_factor` (True in `BEHAVE_COMPAT`), tested against the engine up to 30,000 % slope |
 | D8 | Density conversion | 0.0624279606 lb/ft³ per kg/m³ | 0.06242781786 (1/16.0185) | 2.3e-6 relative; moves O'active by 1.7e-6 and the crown fraction burned by up to 2e-5 | `engine_constants` (True in `BEHAVE_COMPAT`) |
 | D9 | Fuel model 7, live SAV | 1550 ft⁻¹ (Albini 1976, Table 7, p. 92) | 1500 ft⁻¹ (firelab/behave issue 76) | spread rate of FM7 up to 1.5 % (median 0.7 %) | `fuel_table`: `"published"` (1550, default) or `"engine"` (1500) |
+| D10 | Slope in the crown fire spread rate | slope factor of fuel model 10 included (Rothermel 1991, Table 1a and nomograms; Scott & Reinhardt 2001, Eq. 8, 19, 20). Rothermel (1991, p. 25) recommends zero slope for the average rate of a run across uneven terrain | zero slope in the fuel model 10 run and in O'active | crown fire rate higher on slopes: +3.5 to +64 % (median +17 %) over the 19 intervals of Bang and Bang; none on flat ground | `crown_slope`: True in PUBLISHED, False in BEHAVE_COMPAT; O'active tested for consistency with R'active |
 
 Not a divergence: the engine hard-codes the propagating flux ratio and the wind factors B and K of fuel model 10 used for
 O'active; they equal the computed values to 1e-16.

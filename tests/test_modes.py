@@ -70,8 +70,29 @@ def test_crown_ratio_override_and_default_wind_limit_off():
 def test_scott_reinhardt_modes_are_consistent():
     kw = dict(fuel=165, m1=4, m10=5, m100=6, mlh=30, mlw=90, fmc=100, wind20_kmh=np.array([20.0, 30.0, 44.0]),
               slope_pct=20.0, cbh_m=2.0, cbd_kgm3=0.15, canopy_cover_pct=50, canopy_height_m=15.0)
-    p, c = scott_reinhardt(**kw, options=PUBLISHED), scott_reinhardt(**kw, options=BEHAVE_COMPAT)
+    p, c = scott_reinhardt(**kw, options=PUBLISHED.replace(crown_slope=False)), scott_reinhardt(**kw, options=BEHAVE_COMPAT)
     assert np.all((p["cfb"] >= 0) & (p["cfb"] <= 1)) and np.all((c["cfb"] >= 0) & (c["cfb"] <= 1))
     assert np.allclose(p["final_ros"], c["final_ros"], rtol=1e-3)        # the two modes agree closely for this fuel model
     out = surface_fire(165, 4, 5, 6, 30, 90, 2.0, 10.0, options=BEHAVE_COMPAT)
     assert out["ros"] > 0
+
+
+def test_crown_slope_d10():
+    """D10: Rothermel (1991) and Scott & Reinhardt (2001, Eq. 8, 19) include the slope factor of fuel model 10 in the crown
+    fire spread rate; the engine (BEHAVE_COMPAT) uses zero slope."""
+    from rothcruz import rothermel, fuel_model
+    from rothcruz.crown import KMH_TO_FTMIN
+    kw = dict(fuel=165, m1=4, m10=5, m100=6, mlh=30, mlw=90, fmc=100, wind20_kmh=25.0, cbh_m=2.0, cbd_kgm3=0.15,
+              canopy_cover_pct=50, canopy_height_m=15.0)
+    flat = crown_fire(**kw, slope_pct=0.0)["crown_ros"]
+    steep = crown_fire(**kw, slope_pct=40.0)["crown_ros"]
+    r = rothermel(fuel_model(10), .04, .05, .06, .30, .90, 0.4 * 25.0 * KMH_TO_FTMIN, 0.40)
+    assert float(steep / flat) == pytest.approx(float((1 + r["phi_w"] + r["phi_s"]) / (1 + r["phi_w"])), rel=1e-9)
+    for opts in (BEHAVE_COMPAT, PUBLISHED.replace(crown_slope=False)):          # slope ignored in the crown rate
+        assert float(crown_fire(**kw, slope_pct=40.0, options=opts)["crown_ros"]) == pytest.approx(float(flat), rel=1e-12)
+    # O'active is consistent: at the 20-ft wind O'active the crown rate (with slope) equals R'active = 3/CBD
+    for slope in (0.0, 30.0):
+        o = scott_reinhardt(**kw, slope_pct=slope)["o_active_kmh"]
+        at = crown_fire(**{**kw, "wind20_kmh": float(o)}, slope_pct=slope)
+        assert float(at["crown_ros"]) == pytest.approx(3.0 / 0.15, rel=1e-6)
+    assert float(scott_reinhardt(**kw, slope_pct=30.0)["o_active_kmh"]) < float(scott_reinhardt(**kw, slope_pct=0.0)["o_active_kmh"])
