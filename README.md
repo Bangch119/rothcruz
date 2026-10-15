@@ -1,5 +1,7 @@
 # rothcruz
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23387346.svg)](https://doi.org/10.5281/zenodo.23387346)
+
 Rothermel surface fire spread model and crown fire models in Python, verified case by case against the
 official BehavePlus calculation engine ([firelab/behave](https://github.com/firelab/behave)).
 
@@ -92,4 +94,4 @@ The authors reviewed the code, verified it against the engine outputs above, and
 
 ## Citation and license
 
-See `CITATION.cff` (a DOI will be added with the first release). BSD 3-Clause, see `LICENSE.txt`.
+Cite the archived release: https://doi.org/10.5281/zenodo.23387346 (metadata in `CITATION.cff`). BSD 3-Clause, see `LICENSE.txt`.
