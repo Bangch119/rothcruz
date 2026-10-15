@@ -3,7 +3,7 @@ message: "If you use this software, please cite it using these metadata."
 title: "rothcruz: Rothermel surface fire and crown fire spread models verified against the BehavePlus engine"
 version: 0.2.0
 license: BSD-3-Clause
-doi: 10.5281/zenodo.23387346
+doi: 10.5281/zenodo.23387345   # concept DOI: all versions
 abstract: >-
   Python library for the Rothermel surface fire spread model, Van Wagner's crown fire criteria and the crown fire
   spread models of Rothermel (1991), Cruz et al. (2005) and Scott and Reinhardt (2001). Every calculation runs in a
