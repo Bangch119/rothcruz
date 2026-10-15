@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rothcruz"
+version = "0.1.0"
+description = "Rothermel surface fire and crown fire spread models (Van Wagner, Rothermel 1991, Cruz et al. 2005, Scott and Reinhardt 2001) verified against the BehavePlus engine"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE.txt" }
+authors = [{ name = "Seonghyeok Bang" }, { name = "Changhoon Bang", email = "bangch@kyungnam.ac.kr" }]
+keywords = ["wildfire", "Rothermel", "crown fire", "fire behaviour", "verification", "BehavePlus"]
+classifiers = ["Programming Language :: Python :: 3", "License :: OSI Approved :: BSD License", "Topic :: Scientific/Engineering"]
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+test = ["pytest>=7", "pandas>=2.0"]
+
+[project.urls]
+Repository = "https://github.com/bangch119/rothcruz"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+rothcruz = ["data/*.csv"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

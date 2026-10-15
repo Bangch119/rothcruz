@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using these metadata."
+title: "rothcruz: Rothermel surface fire and crown fire spread models verified against the BehavePlus engine"
+version: 0.1.0
+license: BSD-3-Clause
+abstract: >-
+  Python library for the Rothermel surface fire spread model, Van Wagner's crown fire criteria and the crown fire
+  spread models of Rothermel (1991), Cruz et al. (2005) and Scott and Reinhardt (2001). Every calculation runs in a
+  published mode that follows the original equations or in an engine-compatible mode that reproduces the BehavePlus
+  calculation engine, and each difference is documented. Verified case by case against the engine (firelab/behave,
+  commit d4acc8a).
+keywords:
+  - wildfire
+  - fire behaviour
+  - Rothermel
+  - crown fire
+  - BehavePlus
+  - verification
+authors:
+  - family-names: Bang
+    given-names: Seonghyeok
+    orcid: "https://orcid.org/0009-0005-0981-2632"
+    affiliation: "Graduate School of Social Infrastructure Systems Engineering, Kyungnam University, Republic of Korea"
+  - family-names: Bang
+    given-names: Changhoon
+    orcid: "https://orcid.org/0009-0008-9032-5445"
+    email: bangch@kyungnam.ac.kr
+    affiliation: "Department of Fire and Safety Engineering, Kyungnam University, Republic of Korea"
+repository-code: "https://github.com/bangch119/rothcruz"
+# doi: add the Zenodo DOI after the first release
+# date-released: add at release
+references:
+  - type: data
+    title: "Reference outputs of the BehavePlus calculation engine for verifying Rothermel surface and crown fire implementations"
+    authors:
+      - family-names: Bang
+        given-names: Seonghyeok
+      - family-names: Bang
+        given-names: Changhoon
+    version: 1.0.0
+    doi: 10.5281/zenodo.23386397
