@@ -28,8 +28,7 @@ authors:
     email: bangch@kyungnam.ac.kr
     affiliation: "Department of Fire and Safety Engineering, Kyungnam University, Republic of Korea"
 repository-code: "https://github.com/bangch119/rothcruz"
-# doi: add the Zenodo DOI after the first release
-# date-released: add at release
+date-released: 2026-10-16
 references:
   - type: data
     title: "Reference outputs of the BehavePlus calculation engine for verifying Rothermel surface and crown fire implementations"
